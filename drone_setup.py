@@ -20,50 +20,37 @@ def show_popup(title, message):
 
 def check_requirements():
     if sys.version_info < (3, 6):
-        msg = "Python 3.6+ is required."
-        show_popup("Python Error", msg)
-        sys.exit(msg)
-
+        sys.exit("Python 3.6+ required.")
     if platform.system() != "Linux":
-        msg = "Only Linux or WSL is supported."
-        show_popup("OS Error", msg)
-        sys.exit(msg)
-
+        sys.exit("Only Linux/WSL supported.")
     try:
         urllib.request.urlopen("https://github.com", timeout=5)
     except:
-        msg = "No internet connection detected."
-        show_popup("Network Error", msg)
-        sys.exit(msg)
+        sys.exit("No internet connection. Check network.")
 
 def configure_git():
     run_cmd('git config --global url."https://github.com/".insteadOf git@github.com:')
     run_cmd('git config --global url."https://".insteadOf git://')
 
-def clone_and_setup_ardupilot():
+def clone_ardupilot():
     run_cmd("git clone https://github.com/ArduPilot/ardupilot.git ~/ardupilot")
     run_cmd("cd ~/ardupilot && git submodule update --init --recursive")
-    run_cmd("cd ~/ardupilot/Tools/environment_install && ./install-prereqs-ubuntu.sh -y")
 
-    bashrc_path = os.path.expanduser("~/.bashrc")
-    with open(bashrc_path, "a") as f:
-        f.write("\n# ArduPilot Paths\n")
+    with open(os.path.expanduser("~/.bashrc"), "a") as f:
+        f.write("\n# ArduPilot PATHs\n")
         f.write("export PATH=$PATH:$HOME/.local/bin\n")
         f.write("export PATH=$PATH:$HOME/ardupilot\n")
         f.write("export PATH=$PATH:$HOME/ardupilot/Tools/autotest\n")
 
-    print("\n🔁 Re-sourcing ~/.bashrc is recommended after this script.")
+def install_python_libs():
+    run_cmd("pip3 install --break-system-packages empy==3.3.4")
+    run_cmd("pip3 install --break-system-packages pymavlink MAVProxy dronekit pyproj shapely")
 
-def build_simulation_binaries():
-    print("\n=== Building ArduPilot SITL Binaries ===")
-    run_cmd("cd ~/ardupilot && . ~/.bashrc && ./waf configure --board sitl")
+def build_sitl():
+    run_cmd("cd ~/ardupilot && ./waf configure --board sitl")
     run_cmd("cd ~/ardupilot && ./waf copter")
 
-def install_python_libraries():
-    run_cmd("pip3 install --upgrade pip")
-    run_cmd("pip3 install pymavlink MAVProxy dronekit pyproj shapely")
-
-def setup_sim_environment():
+def setup_sim():
     run_cmd("mkdir -p ~/ardu-sim/parameters")
     run_cmd("cp -a ~/ardupilot/build/sitl/bin/. ~/ardu-sim/")
     run_cmd("cp ~/ardupilot/Tools/autotest/default_params/copter.parm ~/ardu-sim/parameters/copter.parm")
@@ -80,19 +67,17 @@ screen -S proxy -d -m bash -c "mavproxy.py --master tcp:127.0.0.1:5760 --out 127
     run_cmd(f"chmod +x {sim_script}")
 
 def main():
-    print("🔧 Drone Programming Environment Installer")
+    print("🚀 Drone Programming Environment Setup Starting...")
     check_requirements()
     configure_git()
-    clone_and_setup_ardupilot()
-    build_simulation_binaries()
-    install_python_libraries()
-    setup_sim_environment()
+    clone_ardupilot()
+    install_python_libs()
+    build_sitl()
+    setup_sim()
 
     print("\n✅ Setup complete!")
-    print("▶ To run simulation:")
-    print("   cd ~/ardu-sim && ./ardu-sim.sh")
-    print("▶ Then open a new terminal and run:")
-    print("   mavproxy.py --master 127.0.0.1:14550")
+    print("▶ Run simulation: cd ~/ardu-sim && ./ardu-sim.sh")
+    print("▶ In new terminal: mavproxy.py --master 127.0.0.1:14550")
 
 if __name__ == "__main__":
     try:
