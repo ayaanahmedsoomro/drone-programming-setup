@@ -52,6 +52,13 @@ def clone_and_setup_ardupilot():
         f.write("export PATH=$PATH:$HOME/ardupilot\n")
         f.write("export PATH=$PATH:$HOME/ardupilot/Tools/autotest\n")
 
+    print("\n🔁 Re-sourcing ~/.bashrc is recommended after this script.")
+
+def build_simulation_binaries():
+    print("\n=== Building ArduPilot SITL Binaries ===")
+    run_cmd("cd ~/ardupilot && . ~/.bashrc && ./waf configure --board sitl")
+    run_cmd("cd ~/ardupilot && ./waf copter")
+
 def install_python_libraries():
     run_cmd("pip3 install --upgrade pip")
     run_cmd("pip3 install pymavlink MAVProxy dronekit pyproj shapely")
@@ -77,6 +84,7 @@ def main():
     check_requirements()
     configure_git()
     clone_and_setup_ardupilot()
+    build_simulation_binaries()
     install_python_libraries()
     setup_sim_environment()
 
