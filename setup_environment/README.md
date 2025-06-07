@@ -1,6 +1,6 @@
 <h1>Drone Programming Installation Setup</h1>
-
-<h2>Installing Ubuntu and Preparing Environment for Drone Programming</h2>
+<br>
+<h4>Installing Ubuntu and Preparing Environment for Drone Programming</h4>
 <p>To begin drone programming using <strong>MAVProxy</strong> and <strong>ArduPilot</strong>, follow these steps to set up Ubuntu on Windows using <strong>WSL (Windows Subsystem for Linux)</strong>:</p>
 
 <h3>Step 1: Enable WSL on Windows</h3>
@@ -22,8 +22,8 @@
 <h3>Step 3: Environment & Simulation Setup in Ubuntu</h3>
 <ul>
   <li><strong>Clone the project</strong>
-    <pre><code>git clone https://github.com/ayaanahmedsoomro/drone-programming-setup.git
-cd drone-programming-setup</code></pre>
+    <pre><code>git clone https://github.com/ayaanahmedsoomro/drone-programming-setup.git</code></pre>
+    <pre><code>cd drone-programming-setup</code></pre>
   </li>
   <li><strong>Run root-level installs</strong>
     <pre><code>sudo bash install_sudo_packages.sh</code></pre>
@@ -32,8 +32,8 @@ cd drone-programming-setup</code></pre>
     <pre><code>python3 drone_setup.py</code></pre>
   </li>
   <li><strong>Start simulation</strong>
-    <pre><code>cd ~/ardu-sim
-./ardu-sim.sh</code></pre>
+    <pre><code>cd ~/ardu-sim</code></pre>
+    <pre><code>./ardu-sim.sh</code></pre>
   </li>
   <li><strong>Open MAVProxy (in new terminal)</strong>
     <pre><code>mavproxy.py --master 127.0.0.1:14550</code></pre>
