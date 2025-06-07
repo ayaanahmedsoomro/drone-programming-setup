@@ -20,25 +20,18 @@ Ubuntu on Windows using WSL (Windows Subsystem for Linux):
 ### Step 3: Environment & Simulation Setup in Ubuntu
 
 1) Clone the project
-<br>
-<code>git clone https://github.com/ayaanahmedsoomro/drone-programming-setup.git</code>
-<br>
-<code>cd drone-programming-setup</code>
+<div><code>git clone https://github.com/ayaanahmedsoomro/drone-programming-setup.git</code><div>
+<div><code>cd drone-programming-setup</code><div>
 
 2) Run root-level installs
-<br>
-<code>sudo bash install_sudo_packages.sh</code>
+<div><code>sudo bash install_sudo_packages.sh</code><div>
 
 3) Run user-level setup
-<br>
-<code>python3 drone_setup.py</code>
+<div><code>python3 drone_setup.py</code><div>
 
 4) Start simulation
-<br>
-<code>cd ~/ardu-sim</code>
-<br>
-<code>./ardu-sim.sh</code>
+<div><code>cd ~/ardu-sim</code><div>
+<div><code>./ardu-sim.sh</code><div>
 
 5) Open MAVProxy (new terminal)
-<br>
-<code>mavproxy.py --master 127.0.0.1:14550</code>
+<div><code>mavproxy.py --master 127.0.0.1:14550</code><div>
