@@ -28,8 +28,9 @@
 <h3>Useful MAVProxy Options During Arming</h3>
 <ul>
   <li><code>--console</code>: Opens a command-line interface for drone telemetry.</li>
-  <img src="assets/chp3_i.png">
+  <img src="drone-programming-setup/Chapter_2/assets">
   <li><code>--map</code>: Opens a visual map showing your drone’s position.</li>
+  <img src="drone-programming-setup/Chapter_2/assets">
 </ul>
 
 <p>These options are typically included when launching the simulation like:</p>
